@@ -15,7 +15,7 @@ Vehicle.prototype.insert = function() {
 }
 
 Vehicle.prototype.move = function() {
-    console.log("moving");
+    console.log("moving", this.type);
 }
 
 Vehicle.prototype.damage = function() {
