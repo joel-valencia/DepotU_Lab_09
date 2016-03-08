@@ -10,10 +10,12 @@ Vehicle.prototype.insert = function() {
     var top = Math.floor(Math.random() * document.documentElement.clientHeight);
     $('#'+this.id).css("left", left);
     $('#'+this.id).css("top", top);
+    $('#'+this.id).css("background-color", 'rgb(' + randomNum() + ',' + randomNum() + ',' + randomNum() + ')');
+    this.move();
 }
 
 Vehicle.prototype.move = function() {
-    
+    console.log("moving");
 }
 
 Vehicle.prototype.damage = function() {
@@ -85,6 +87,10 @@ var addTank = function() {
     allVehicles[allVehicles.length - 1].id = allVehicles.length - 1;
     allVehicles[allVehicles.length - 1].type = "tank";
     allVehicles[allVehicles.length - 1].insert();
+}
+
+function randomNum() {
+    return Math.floor((Math.random() * 150)) + 50;
 }
 
 $(document).ready(function() {
