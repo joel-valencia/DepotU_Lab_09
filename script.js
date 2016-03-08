@@ -18,6 +18,7 @@ Vehicle.prototype.move = function() {
     var newDirectionIndex = Math.floor(Math.random() * this.directions.length);
     var newDirection = this.directions[newDirectionIndex];
     console.log("moving", this.type, newDirection);
+    this.currentDirection = newDirection;
     var duration = 2000 / this.speed;
     if (newDirection == "N") {
         $('#'+this.id).css("transform", "rotate(90deg)");
@@ -68,6 +69,33 @@ var Car = function() {
 }
 Car.prototype = Object.create(Vehicle.prototype);
 Car.prototype.constructor = Car;
+Car.prototype.reverse = function() {
+    var duration = 2000 / this.speed;
+    if (this.currentDirection == "W") {
+        $('#'+this.id).css('border-spacing', 0);
+        this.currentDirection = "E";
+        $('#'+this.id).animate({  borderSpacing: 180 }, {
+            step: function(now,fx) {
+                $(this).css('transform','rotate('+now+'deg)');
+            },
+            duration:'slow'
+        },'linear');
+        $('#'+this.id).animate({left: "+=400"}, duration);
+        return;
+    }
+    if (this.currentDirection == "E") {
+        $('#'+this.id).css('border-spacing', 180);
+        this.currentDirection = "W";
+        $('#'+this.id).animate({  borderSpacing: 360 }, {
+            step: function(now,fx) {
+                $(this).css('transform','rotate('+now+'deg)');
+            },
+            duration:'slow'
+        },'linear');
+        $('#'+this.id).animate({left: "-=400"}, duration);
+        return;
+    }
+}
 
 var CopCar = function() {
     Car.call(this);
@@ -101,6 +129,9 @@ var addCar = function() {
     allVehicles[allVehicles.length - 1].id = allVehicles.length - 1;
     allVehicles[allVehicles.length - 1].type = "car";
     allVehicles[allVehicles.length - 1].insert();
+    $('#' + (allVehicles.length - 1)).click(function() {
+       allVehicles[this.id].reverse();
+    });
 }
 
 var addCopCar = function() {
