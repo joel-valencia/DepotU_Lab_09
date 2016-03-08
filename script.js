@@ -18,38 +18,38 @@ Vehicle.prototype.move = function() {
     var newDirectionIndex = Math.floor(Math.random() * this.directions.length);
     var newDirection = this.directions[newDirectionIndex];
     console.log("moving", this.type, newDirection);
-    var duration = 2000;
+    var duration = 2000 / this.speed;
     if (newDirection == "N") {
         $('#'+this.id).css("transform", "rotate(90deg)");
-        $('#'+this.id).animate({top: "-=400"}, duration / this.speed);
+        $('#'+this.id).animate({top: "-=400"}, duration);
     }
     if (newDirection == "S") {
         $('#'+this.id).css("transform", "rotate(-90deg)");
-        $('#'+this.id).animate({top: "+=400"}, duration / this.speed);
+        $('#'+this.id).animate({top: "+=400"}, duration);
     }
     if (newDirection == "W") {
         $('#'+this.id).css("transform", "rotate(0)");
-        $('#'+this.id).animate({left: "-=400"}, duration / this.speed);
+        $('#'+this.id).animate({left: "-=400"}, duration);
     }
     if (newDirection == "E") {
         $('#'+this.id).css("transform", "rotate(180deg)");
-        $('#'+this.id).animate({left: "+=400"}, duration / this.speed);
+        $('#'+this.id).animate({left: "+=400"}, duration);
     }
     if (newDirection == "NW") {
         $('#'+this.id).css("transform", "rotate(45deg)");
-        $('#'+this.id).animate({left: "-=300", top: "-=300"}, duration / this.speed);
+        $('#'+this.id).animate({left: "-=300", top: "-=300"}, duration);
     }
     if (newDirection == "NE") {
         $('#'+this.id).css("transform", "rotate(135deg)");
-        $('#'+this.id).animate({left: "+=300", top: "-=300"}, duration / this.speed);
+        $('#'+this.id).animate({left: "+=300", top: "-=300"}, duration);
     }
     if (newDirection == "SW") {
         $('#'+this.id).css("transform", "rotate(-45deg)");
-        $('#'+this.id).animate({left: "-=300", top: "+=300"}, duration / this.speed);
+        $('#'+this.id).animate({left: "-=300", top: "+=300"}, duration);
     }
     if (newDirection == "SE") {
         $('#'+this.id).css("transform", "rotate(-135deg)");
-        $('#'+this.id).animate({left: "+=300", top: "+=300"}, duration / this.speed);
+        $('#'+this.id).animate({left: "+=300", top: "+=300"}, duration);
     }
 }
 
