@@ -6,7 +6,10 @@ var Vehicle = function() {
 Vehicle.prototype.insert = function() {
     var newVehicle = $('<div class= "vehicle ' + this.type + '" id=' + this.id + '></div>');
     $('.container').append(newVehicle);
-    
+    var left = Math.floor(Math.random() * document.documentElement.clientWidth);
+    var top = Math.floor(Math.random() * document.documentElement.clientHeight);
+    $('#'+this.id).css("left", left);
+    $('#'+this.id).css("top", top);
 }
 
 Vehicle.prototype.move = function() {
