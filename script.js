@@ -10,7 +10,8 @@ Vehicle.prototype.insert = function() {
     var top = Math.floor(Math.random() * document.documentElement.clientHeight);
     $('#'+this.id).css("left", left);
     $('#'+this.id).css("top", top);
-    $('#'+this.id).css("background-color", 'rgb(' + randomNum() + ',' + randomNum() + ',' + randomNum() + ')');
+    this.color = 'rgb(' + randomNum() + ',' + randomNum() + ',' + randomNum() + ')';
+    $('#'+this.id).css("background-color", this.color);
     this.move();
 }
 
@@ -100,9 +101,13 @@ Car.prototype.reverse = function() {
 var CopCar = function() {
     Car.call(this);
     this.directions = ["N", "S"];
+    this.sirenOn = false;
 }
 CopCar.prototype = Object.create(Car.prototype);
 CopCar.prototype.constructor = CopCar;
+CopCar.prototype.siren = function() {
+    
+}
 
 var Motorcycle = function() {
     Vehicle.call(this);
