@@ -18,6 +18,30 @@ Vehicle.prototype.move = function() {
     var newDirectionIndex = Math.floor(Math.random() * this.directions.length);
     var newDirection = this.directions[newDirectionIndex];
     console.log("moving", this.type, newDirection);
+    if (newDirection == "N") {
+        $('#'+this.id).css("transform", "rotate(90deg)");
+    }
+    if (newDirection == "S") {
+        $('#'+this.id).css("transform", "rotate(-90deg)");
+    }
+    if (newDirection == "W") {
+        $('#'+this.id).css("transform", "rotate(0)");
+    }
+    if (newDirection == "E") {
+        $('#'+this.id).css("transform", "rotate(180deg)");
+    }
+    if (newDirection == "NW") {
+        $('#'+this.id).css("transform", "rotate(45deg)");
+    }
+    if (newDirection == "NE") {
+        $('#'+this.id).css("transform", "rotate(135deg)");
+    }
+    if (newDirection == "SW") {
+        $('#'+this.id).css("transform", "rotate(-45deg)");
+    }
+    if (newDirection == "SE") {
+        $('#'+this.id).css("transform", "rotate(-135deg)");
+    }
 }
 
 Vehicle.prototype.damage = function() {
