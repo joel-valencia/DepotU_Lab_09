@@ -1,0 +1,21 @@
+.vehicle {
+    border: 2px solid black;
+    width: 100px;
+    height: 35px;
+}
+
+.car {
+    background-color: red;
+}
+
+.copcar {
+    background-color: blue;
+}
+
+.motorcycle {
+    background-color: black;
+}
+
+.tank {
+    background-color: green;
+}
