@@ -15,7 +15,9 @@ Vehicle.prototype.insert = function() {
 }
 
 Vehicle.prototype.move = function() {
-    console.log("moving", this.type);
+    var newDirectionIndex = Math.floor(Math.random() * this.directions.length);
+    var newDirection = this.directions[newDirectionIndex];
+    console.log("moving", this.type, newDirection);
 }
 
 Vehicle.prototype.damage = function() {
@@ -29,14 +31,14 @@ Vehicle.prototype.totaled = function() {
 
 var Car = function() {
     Vehicle.call(this);
-    
+    this.directions = ["W", "E"];
 }
 Car.prototype = Object.create(Vehicle.prototype);
 Car.prototype.constructor = Car;
 
 var CopCar = function() {
     Car.call(this);
-    
+    this.directions = ["N", "S"];
 }
 CopCar.prototype = Object.create(Car.prototype);
 CopCar.prototype.constructor = CopCar;
@@ -44,7 +46,7 @@ CopCar.prototype.constructor = CopCar;
 var Motorcycle = function() {
     Vehicle.call(this);
     this.speed = 2;
-    
+    this.directions = ["NW", "NE", "SW", "SE"];
 }
 Motorcycle.prototype = Object.create(Vehicle.prototype);
 Motorcycle.prototype.constructor = Motorcycle;
@@ -52,7 +54,7 @@ Motorcycle.prototype.constructor = Motorcycle;
 var Tank = function() {
     Vehicle.call(this);
     this.speed = 0.5;
-    
+    this.directions = ["N", "S", "W", "E", "NW", "NE", "SW", "SE"]
 }
 Tank.prototype = Object.create(Vehicle.prototype);
 Tank.prototype.constructor = Tank;
