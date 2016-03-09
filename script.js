@@ -106,7 +106,16 @@ var CopCar = function() {
 CopCar.prototype = Object.create(Car.prototype);
 CopCar.prototype.constructor = CopCar;
 CopCar.prototype.siren = function() {
-    
+    if (this.sirenOn == false) {
+        this.sirenOn = true;
+        allSirens[this.id] = setInterval('blink('+this.id+', "'+this.color+'")', 500);
+        return;  
+    }
+    if (this.sirenOn == true) {
+        clearInterval(allSirens[this.id]);
+        this.sirenOn = false;
+        return;
+    }
 }
 
 var Motorcycle = function() {
@@ -127,6 +136,7 @@ Tank.prototype.constructor = Tank;
 
 
 var allVehicles = [];
+var allSirens = [];
 
 
 var addCar = function() {
@@ -144,6 +154,9 @@ var addCopCar = function() {
     allVehicles[allVehicles.length - 1].id = allVehicles.length - 1;
     allVehicles[allVehicles.length - 1].type = "copCar";
     allVehicles[allVehicles.length - 1].insert();
+    $('#' + (allVehicles.length - 1)).click(function() {
+       allVehicles[this.id].siren();
+    });
 }
 
 var addMotorcycle = function() {
@@ -162,6 +175,13 @@ var addTank = function() {
 
 function randomNum() {
     return Math.floor((Math.random() * 150)) + 50;
+}
+
+function blink(id, color) {
+    $('#'+id).css('background-color', 'yellow');
+    setTimeout(function() {
+        $('#'+id).css('background-color', color);
+    }, 100);
 }
 
 $(document).ready(function() {
