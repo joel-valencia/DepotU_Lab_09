@@ -21,37 +21,43 @@ Vehicle.prototype.move = function() {
     console.log("moving", this.type, newDirection);
     this.currentDirection = newDirection;
     var duration = 2000 / this.speed;
+    var options = {
+        step: function() {
+            detectCollisions(this.id);
+        },
+        duration: duration
+    }
     if (newDirection == "N") {
         $('#'+this.id).css("transform", "rotate(90deg)");
-        $('#'+this.id).animate({top: "-=400"}, duration);
+        $('#'+this.id).animate({top: "-=400"}, options);
     }
     if (newDirection == "S") {
         $('#'+this.id).css("transform", "rotate(-90deg)");
-        $('#'+this.id).animate({top: "+=400"}, duration);
+        $('#'+this.id).animate({top: "+=400"}, options);
     }
     if (newDirection == "W") {
         $('#'+this.id).css("transform", "rotate(0)");
-        $('#'+this.id).animate({left: "-=400"}, duration);
+        $('#'+this.id).animate({left: "-=400"}, options);
     }
     if (newDirection == "E") {
         $('#'+this.id).css("transform", "rotate(180deg)");
-        $('#'+this.id).animate({left: "+=400"}, duration);
+        $('#'+this.id).animate({left: "+=400"}, options);
     }
     if (newDirection == "NW") {
         $('#'+this.id).css("transform", "rotate(45deg)");
-        $('#'+this.id).animate({left: "-=300", top: "-=300"}, duration);
+        $('#'+this.id).animate({left: "-=300", top: "-=300"}, options);
     }
     if (newDirection == "NE") {
         $('#'+this.id).css("transform", "rotate(135deg)");
-        $('#'+this.id).animate({left: "+=300", top: "-=300"}, duration);
+        $('#'+this.id).animate({left: "+=300", top: "-=300"}, options);
     }
     if (newDirection == "SW") {
         $('#'+this.id).css("transform", "rotate(-45deg)");
-        $('#'+this.id).animate({left: "-=300", top: "+=300"}, duration);
+        $('#'+this.id).animate({left: "-=300", top: "+=300"}, options);
     }
     if (newDirection == "SE") {
         $('#'+this.id).css("transform", "rotate(-135deg)");
-        $('#'+this.id).animate({left: "+=300", top: "+=300"}, duration);
+        $('#'+this.id).animate({left: "+=300", top: "+=300"}, options);
     }
 }
 
@@ -184,6 +190,10 @@ function blink(id, color) {
     }, 100);
 }
 
+function detectCollisions(id) {
+    console.log("vehicle " + id + ", top " + $('#'+id).css("top") + ", left " + $('#'+id).css("left"));
+}
+
 $(document).ready(function() {
     $('#btnCar').click(function() {
         addCar();
@@ -196,5 +206,11 @@ $(document).ready(function() {
     });
     $('#btnTank').click(function() {
         addTank();
+    });
+    $('body').click(function() {
+        console.log('------------------');
+        for (i in allVehicles) {
+            console.log("vehicle " + i + ", top " + $('#'+i).css("top") + ", left " + $('#'+i).css("left"));
+        }
     });
 });
