@@ -23,7 +23,9 @@ Vehicle.prototype.move = function() {
     var duration = 2000 / this.speed;
     var options = {
         step: function() {
-            detectCollisions(this.id);
+            if (detectCollisions(this.id)) {
+                $('#'+this.id).stop();
+            }
         },
         duration: duration
     }
@@ -78,6 +80,14 @@ Car.prototype = Object.create(Vehicle.prototype);
 Car.prototype.constructor = Car;
 Car.prototype.reverse = function() {
     var duration = 2000 / this.speed;
+    var options = {
+        step: function() {
+            if (detectCollisions(this.id)) {
+                $('#'+this.id).stop();
+            }
+        },
+        duration: duration
+    }
     if (this.currentDirection == "W") {
         $('#'+this.id).css('border-spacing', 0);
         this.currentDirection = "E";
@@ -87,7 +97,7 @@ Car.prototype.reverse = function() {
             },
             duration:'slow'
         },'linear');
-        $('#'+this.id).animate({left: "+=400"}, duration);
+        $('#'+this.id).animate({left: "+=400"}, options);
         return;
     }
     if (this.currentDirection == "E") {
@@ -99,7 +109,7 @@ Car.prototype.reverse = function() {
             },
             duration:'slow'
         },'linear');
-        $('#'+this.id).animate({left: "-=400"}, duration);
+        $('#'+this.id).animate({left: "-=400"}, options);
         return;
     }
 }
@@ -192,6 +202,35 @@ function blink(id, color) {
 
 function detectCollisions(id) {
     console.log("vehicle " + id + ", top " + $('#'+id).css("top") + ", left " + $('#'+id).css("left"));
+    for (var i in allVehicles) {
+        var myTop = parseInt($('#'+id).css("top"), 10);
+        var myLeft = parseInt($('#'+id).css("left"), 10);
+        var otherTop = parseInt($('#'+i).css("top"), 10);
+        var otherLeft = parseInt($('#'+i).css("left"), 10);
+        var topDiff = Math.abs(myTop - otherTop);
+        var leftDiff = Math.abs(myLeft - otherLeft);
+        var collisionThreshold = 75;
+        if (i !== id && topDiff < collisionThreshold && leftDiff < collisionThreshold) {
+            console.log("collision! vehicle " + id + " hit vehicle " + i);
+            var myOptions = {
+                done: function() {
+                    $('#'+id).remove();
+                }
+            }
+            var otherOptions = {
+                done: function() {
+                    $('#'+id).remove();
+                }
+            }
+            $('#'+id).hide(myOptions);
+            $('#'+i).hide(otherOptions);
+            clearInterval(allSirens[id]);
+            clearInterval(allSirens[i]);
+            delete allVehicles[id];
+            delete allVehicles[i];
+            return true;
+        }
+    }
 }
 
 $(document).ready(function() {
